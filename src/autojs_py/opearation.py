@@ -1,10 +1,10 @@
 import pyautogui
 
-from capture import screenshot
-from reconginze import template_match
+from .capture import screenshot
+from .reconginze import template_match
 import time
 
-from src.autojs_py.ocr import ocr2box
+from .ocr import ocr2box
 
 
 def Click(x,y):
