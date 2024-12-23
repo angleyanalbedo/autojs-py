@@ -1,4 +1,11 @@
-class colors:
+def get_rgb(color):
+    if isinstance(color, int):
+        return ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF)
+    elif isinstance(color, str):
+        return get_rgb(Colors.parseColor(color))
+    else:
+        raise TypeError("Color must be an integer or a hex string.")
+class Colors:
     BLACK = 0xFF000000  # 黑色
     DKGRAY = 0xFF444444  # 深灰色
     GRAY = 0xFF888888  # 灰色
@@ -148,6 +155,7 @@ class colors:
         """
         return (alpha << 24) | (red << 16) | (green << 8) | blue
 
+
     @staticmethod
     def parseColor(colorStr):
         """
@@ -183,14 +191,6 @@ class colors:
         返回:
         bool: 是否相似。
         """
-
-        def get_rgb(color):
-            if isinstance(color, int):
-                return ((color >> 16) & 0xFF, (color >> 8) & 0xFF, color & 0xFF)
-            elif isinstance(color, str):
-                return get_rgb(Colors.parseColor(color))
-            else:
-                raise TypeError("Color must be an integer or a hex string.")
 
         r1, g1, b1 = get_rgb(color1)
         r2, g2, b2 = get_rgb(color2)
