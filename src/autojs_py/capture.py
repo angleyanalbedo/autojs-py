@@ -1,3 +1,4 @@
+import cv2
 import numpy as np
 import pyautogui
 import pygetwindow as gw
@@ -5,7 +6,7 @@ import pygetwindow as gw
 
 def screenshot():
     # 截取屏幕并保存为 screenshot.png
-    return np.array(pyautogui.screenshot())
+    return cv2.cvtColor(np.array(pyautogui.screenshot()), cv2.COLOR_RGB2BGR)
 
 def screenshot_app(window_title):
     # Get the window by title
@@ -20,4 +21,4 @@ def screenshot_app(window_title):
     # Capture the screenshot of the window
     shot = pyautogui.screenshot(region=(left, top, right - left, bottom - top))
 
-    return np.array(shot)
+    return cv2.cvtColor(np.array(shot), cv2.COLOR_RGB2BGR)

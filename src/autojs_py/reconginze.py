@@ -5,18 +5,18 @@ def template_match(image_path, template_path, threshold=0.8):
     # 加载主图像和模板图像
     # Check if image_path is a file path or a numpy array
     if isinstance(image_path, str):
-        image = cv2.imread(image_path)
+        img = cv2.imread(image_path)
     elif isinstance(image_path, np.ndarray):
-        image = image_path
+        img = image_path
     else:
         raise ValueError("image_path must be a file path or a numpy array")
 
 
-    template = cv2.imread(template_path)
+    template = cv2.cvtColor(cv2.imread(template_path), cv2.COLOR_RGB2GRAY)
     template_height, template_width = template.shape[:2]
 
     # 执行模板匹配
-    result = cv2.matchTemplate(image, template, cv2.TM_CCOEFF_NORMED)
+    result = cv2.matchTemplate(img, template, cv2.TM_CCOEFF_NORMED)
 
     # 找到所有匹配值高于阈值的位置
     locations = np.where(result >= threshold)
@@ -25,10 +25,10 @@ def template_match(image_path, template_path, threshold=0.8):
     # 将匹配的位置添加到列表中
     for point in zip(*locations[::-1]):  # 反转坐标
         matches.append((point[0], point[1], template_width, template_height))
-        cv2.rectangle(image, point, (point[0] + template_width, point[1] + template_height), (0, 255, 0), 2)
+        cv2.rectangle(img, point, (point[0] + template_width, point[1] + template_height), (0, 255, 0), 2)
 
 
-    return matches,image
+    return matches,img
 
 if __name__ == '__main__':
 # 使用示例
